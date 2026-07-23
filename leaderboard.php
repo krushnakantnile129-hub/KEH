@@ -23,7 +23,7 @@ $rankings = $stmt->fetchAll();
         <div class="brand-icon mx-auto mb-2 bg-warning text-dark fs-3" style="width: 56px; height: 56px;">
             <i class="fas fa-trophy"></i>
         </div>
-        <h2 class="fw-bold mb-2">Student Leaderboard &amp; Top Tutors</h2>
+        <h2 class="fw-bold mb-2">Student &amp; Top Tutors</h2>
         <p class="text-muted small mb-0">Rankings based on teaching sessions, learning completions, and 5-star student reviews.</p>
     </div>
 

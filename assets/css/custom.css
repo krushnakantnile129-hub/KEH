@@ -245,11 +245,11 @@ body {
 .btn-call-control {
     width: 46px;
     height: 46px;
-    border-radius: 50%;
+    border-radius: 55%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: blue;
     border: none;
     font-size: 1.1rem;
     transition: all 0.2s ease;
@@ -262,7 +262,7 @@ body {
 /* Leaderboard */
 .rank-badge {
     width: 32px;
-    height: 32px;
+    height: 37px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
