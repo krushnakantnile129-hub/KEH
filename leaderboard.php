@@ -16,7 +16,7 @@ $stmt = $pdo->query("
 ");
 $rankings = $stmt->fetchAll();
 ?>
-
+<h1 style="color:red;">TESTING 123</h1>
 <div class="container py-4">
     <!-- Leaderboard Header Card -->
     <div class="keh-card p-4 p-md-5 mb-4 shadow-sm text-center">
