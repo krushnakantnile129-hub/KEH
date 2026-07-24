@@ -68,7 +68,11 @@ require_once __DIR__ . '/includes/navbar.php';
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold mb-1">Learning Requests</h3>
+<<<<<<< HEAD
             <p class="text-muted small mb-0">Manage incoming  peer requests and track your sent learning applications.</p>
+=======
+            <p class="text-muted small mb-0">Manage incoming and outgoing peer requests and track your sent learning applications.</p>
+>>>>>>> 5e79dd5c324905a764c3d23e57d138c1ff1be312
         </div>
         <a href="find-mentor.php" class="btn btn-primary rounded-pill px-4"><i class="fas fa-search me-1"></i> Find More Mentors</a>
     </div>
