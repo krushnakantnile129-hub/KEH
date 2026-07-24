@@ -2,6 +2,22 @@
 CREATE DATABASE IF NOT EXISTS `keh_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `keh_db`;
 
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS `webrtc_signals`;
+DROP TABLE IF EXISTS `video_calls`;
+DROP TABLE IF EXISTS `reports`;
+DROP TABLE IF EXISTS `certificates`;
+DROP TABLE IF EXISTS `points`;
+DROP TABLE IF EXISTS `reviews`;
+DROP TABLE IF EXISTS `messages`;
+DROP TABLE IF EXISTS `sessions`;
+DROP TABLE IF EXISTS `learning_requests`;
+DROP TABLE IF EXISTS `user_skills`;
+DROP TABLE IF EXISTS `skills`;
+DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `users`;
+
 -- 1. Users Table
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -174,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `webrtc_signals` (
 -- ========================================================
 
 -- Seed Categories
-INSERT INTO `categories` (`id`, `category_name`) VALUES
+INSERT IGNORE INTO `categories` (`id`, `category_name`) VALUES
 (1, 'Programming'),
 (2, 'Web Development'),
 (3, 'Graphic Design'),
@@ -188,7 +204,7 @@ INSERT INTO `categories` (`id`, `category_name`) VALUES
 (11, 'Others');
 
 -- Seed Skills
-INSERT INTO `skills` (`id`, `skill_name`, `category_id`) VALUES
+INSERT IGNORE INTO `skills` (`id`, `skill_name`, `category_id`) VALUES
 (1, 'Java Programming', 1),
 (2, 'Python Data Science', 1),
 (3, 'C++ Algorithms', 1),
@@ -204,21 +220,21 @@ INSERT INTO `skills` (`id`, `skill_name`, `category_id`) VALUES
 
 -- Seed Users
 -- Password for all seed users is: password123 (hash: $2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G)
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `profile_photo`, `college`, `department`, `bio`, `github_url`, `linkedin_url`, `points`, `is_admin`, `is_blocked`) VALUES
-(1, 'System Admin', 'admin@keh.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Tech University', 'Administration', 'Platform Administrator & Coordinator.', 'https://github.com', 'https://linkedin.com', 100, 1, 0),
-(2, 'Rahul Sharma', 'rahul@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar1.png', 'National Institute of Technology', 'Computer Science', 'Passionate Java programmer & competitive coding enthusiast. Excited to learn UI/UX design and Guitar!', 'https://github.com/rahuljava', 'https://linkedin.com/in/rahulsharma', 150, 0, 0),
-(3, 'Krishna Patel', 'krishna@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar2.png', 'College of Engineering & Tech', 'Information Technology', 'Graphic designer with 3 years of freelancing experience. Looking to learn Python for data science.', 'https://github.com/krishnadesign', 'https://linkedin.com/in/krishnapatel', 125, 0, 0),
-(4, 'Aman Verma', 'aman@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar3.png', 'State University of Design', 'Media Arts', 'Video editor and motion graphics creator. Love teaching Premiere Pro and learning Web Development.', 'https://github.com/amanvfx', 'https://linkedin.com/in/amanverma', 100, 0, 0),
-(5, 'Sneha Rao', 'sneha@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar4.png', 'City Arts College', 'Humanities', 'Fluent Spanish speaker and public speaking coach. Eager to pick up C++ algorithms.', 'https://github.com/sneharao', 'https://linkedin.com/in/sneharao', 85, 0, 0),
-(6, 'Krushnakant Nile', 'krishnanile129@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Full Stack Developer & Peer Tutor.', 'https://github.com/krushnakant', 'https://linkedin.com/in/krushnakant', 120, 0, 0),
-(7, 'Swarali Pahane', 'pahaneswarali@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Passionate learner & student mentor.', 'https://github.com/swarali', 'https://linkedin.com/in/swarali', 100, 0, 0),
-(8, 'Sakul', 'sakul@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Software developer & technology enthusiast.', 'https://github.com/sakul', 'https://linkedin.com/in/sakul', 110, 0, 0),
-(9, 'Suhani', 'suhani@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Information Technology', 'Creative designer and frontend enthusiast.', 'https://github.com/suhani', 'https://linkedin.com/in/suhani', 105, 0, 0),
-(10, 'Sanskruti', 'sanskruti@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'AI & Machine Learning enthusiast.', 'https://github.com/sanskruti', 'https://linkedin.com/in/sanskruti', 95, 0, 0);
+INSERT IGNORE INTO `users` (`id`, `name`, `email`, `password`, `profile_photo`, `college`, `department`, `bio`, `github_url`, `linkedin_url`, `points`, `is_admin`, `is_blocked`) VALUES
+(1, 'System Admin', 'admin@keh.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Tech University', 'Administration', 'Platform Administrator & Coordinator.', 'https://github.com', 'https://linkedin.com', 100, 1, 0),
+(2, 'Rahul Sharma', 'rahul@student.edu', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'avatar1.png', 'National Institute of Technology', 'Computer Science', 'Passionate Java programmer & competitive coding enthusiast. Excited to learn UI/UX design and Guitar!', 'https://github.com/rahuljava', 'https://linkedin.com/in/rahulsharma', 150, 0, 0),
+(3, 'Krishna Patel', 'krishna@student.edu', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'avatar2.png', 'College of Engineering & Tech', 'Information Technology', 'Graphic designer with 3 years of freelancing experience. Looking to learn Python for data science.', 'https://github.com/krishnadesign', 'https://linkedin.com/in/krishnapatel', 125, 0, 0),
+(4, 'Aman Verma', 'aman@student.edu', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'avatar3.png', 'State University of Design', 'Media Arts', 'Video editor and motion graphics creator. Love teaching Premiere Pro and learning Web Development.', 'https://github.com/amanvfx', 'https://linkedin.com/in/amanverma', 100, 0, 0),
+(5, 'Sneha Rao', 'sneha@student.edu', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'avatar4.png', 'City Arts College', 'Humanities', 'Fluent Spanish speaker and public speaking coach. Eager to pick up C++ algorithms.', 'https://github.com/sneharao', 'https://linkedin.com/in/sneharao', 85, 0, 0),
+(6, 'Krushnakant Nile', 'krishnanile129@gmail.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Full Stack Developer & Peer Tutor.', 'https://github.com/krushnakant', 'https://linkedin.com/in/krushnakant', 120, 0, 0),
+(7, 'Swarali Pahane', 'pahaneswarali@gmail.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Passionate learner & student mentor.', 'https://github.com/swarali', 'https://linkedin.com/in/swarali', 100, 0, 0),
+(8, 'Sakul', 'sakulmahajan40@gmail.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Software developer & technology enthusiast.', 'https://github.com/sakul', 'https://linkedin.com/in/sakul', 110, 0, 0),
+(9, 'Suhani', 'suhanipendam1403@gmail.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Zeal College of Engineering', 'Information Technology', 'Creative designer and frontend enthusiast.', 'https://github.com/suhani', 'https://linkedin.com/in/suhani', 105, 0, 0),
+(10, 'Sanskruti', 'sanskrutibhojane06@gmail.com', '$2y$10$eHGxpFJ9Ngc.hh3Ql833oegSxT/kiN6AcG0iPa41rdE1400PDde5O', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'AI & Machine Learning enthusiast.', 'https://github.com/sanskruti', 'https://linkedin.com/in/sanskruti', 95, 0, 0);
 
 -- Seed User Skills
 -- Rahul teaches Java (Expert), wants to learn Figma (Beginner)
-INSERT INTO `user_skills` (`user_id`, `skill_id`, `skill_type`, `proficiency_level`) VALUES
+INSERT IGNORE INTO `user_skills` (`user_id`, `skill_id`, `skill_type`, `proficiency_level`) VALUES
 (2, 1, 'teach', 'Expert'),
 (2, 3, 'teach', 'Advanced'),
 (2, 8, 'learn', 'Beginner'),
@@ -256,31 +272,33 @@ INSERT INTO `user_skills` (`user_id`, `skill_id`, `skill_type`, `proficiency_lev
 (10, 6, 'learn', 'Beginner');
 
 -- Seed Learning Requests
-INSERT INTO `learning_requests` (`id`, `learner_id`, `mentor_id`, `skill_id`, `message`, `status`) VALUES
+INSERT IGNORE INTO `learning_requests` (`id`, `learner_id`, `mentor_id`, `skill_id`, `message`, `status`) VALUES
 (1, 3, 2, 1, 'Hi Rahul, I would love to learn core Java concepts from you in exchange for Graphic Design lessons!', 'accepted'),
 (2, 5, 2, 1, 'Hey Rahul, could you teach me basic Java object-oriented programming?', 'pending'),
 (3, 2, 4, 7, 'Hi Aman, looking forward to learning video editing basics!', 'accepted');
 
 -- Seed Sessions
-INSERT INTO `sessions` (`id`, `request_id`, `learner_id`, `mentor_id`, `session_date`, `session_time`, `session_topic`, `room_id`, `status`, `learner_confirmed`, `mentor_confirmed`) VALUES
+INSERT IGNORE INTO `sessions` (`id`, `request_id`, `learner_id`, `mentor_id`, `session_date`, `session_time`, `session_topic`, `room_id`, `status`, `learner_confirmed`, `mentor_confirmed`) VALUES
 (1, 1, 3, 2, CURDATE(), '16:00:00', 'Java OOP Inheritance & Interfaces', 'ROOM-KEH-2-3-991', 'completed', 1, 1),
 (2, 3, 2, 4, DATE_ADD(CURDATE(), INTERVAL 1 DAY), '18:00:00', 'Premiere Pro Timeline & Transitions', 'ROOM-KEH-4-2-882', 'scheduled', 0, 0);
 
 -- Seed Messages
-INSERT INTO `messages` (`sender_id`, `receiver_id`, `request_id`, `message`, `is_read`) VALUES
+INSERT IGNORE INTO `messages` (`sender_id`, `receiver_id`, `request_id`, `message`, `is_read`) VALUES
 (3, 2, 1, 'Hi Rahul! Excited to start our Java learning session.', 1),
 (2, 3, 1, 'Hey Krishna! Welcome. Let us meet today at 4 PM for Java OOP.', 1),
 (3, 2, 1, 'Sounds great! I have my questions ready.', 1);
 
 -- Seed Reviews
-INSERT INTO `reviews` (`session_id`, `reviewer_id`, `reviewed_user_id`, `rating`, `review_text`) VALUES
+INSERT IGNORE INTO `reviews` (`session_id`, `reviewer_id`, `reviewed_user_id`, `rating`, `review_text`) VALUES
 (1, 3, 2, 5, 'Rahul is an amazing mentor! Very patient and explained OOP concepts with clear code examples.');
 
 -- Seed Points Log
-INSERT INTO `points` (`user_id`, `points`, `reason`) VALUES
+INSERT IGNORE INTO `points` (`user_id`, `points`, `reason`) VALUES
 (2, 10, 'Taught Java OOP session'),
 (2, 3, 'Received 5-star review from Krishna'),
 (3, 5, 'Completed Java learning session'),
 (2, 5, 'Profile completion bonus'),
 (3, 5, 'Profile completion bonus'),
 (4, 5, 'Profile completion bonus');
+
+SET FOREIGN_KEY_CHECKS = 1;
