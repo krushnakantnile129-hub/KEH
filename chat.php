@@ -57,6 +57,168 @@ require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
 ?>
 
+<style>
+    /* ===== Skill Chat — gradient theme & animations ===== */
+
+    .keh-card {
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Sidebar heading gets a subtle gradient text treatment */
+    .col-md-4 .keh-card h5.text-purple,
+    .col-lg-3 .keh-card h5.text-purple {
+        background: linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: gradientShift 6s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0%   { background-position: 0% center; }
+        50%  { background-position: 100% center; }
+        100% { background-position: 0% center; }
+    }
+
+    /* Conversation list items */
+    .list-group-item-action {
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+    }
+
+    .list-group-item-action:hover {
+        transform: translateX(4px) scale(1.01);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.18);
+    }
+
+    .list-group-item-action.bg-primary {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+    }
+
+    .list-group-item-action img,
+    .keh-card-header img {
+        transition: transform 0.25s ease;
+    }
+
+    .list-group-item-action:hover img {
+        transform: scale(1.08) rotate(-2deg);
+    }
+
+    /* Chat header bar */
+    .chat-container .keh-card-header {
+        background: linear-gradient(120deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+    }
+
+    .keh-card-header img {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Video call button — soft pulsing gradient */
+    .btn-success.rounded-pill {
+        border: none;
+        background: linear-gradient(270deg, #22c55e, #16a34a, #22c55e);
+        background-size: 200% 200%;
+        animation: pulseGradient 3s ease infinite;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-success.rounded-pill:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+    }
+
+    @keyframes pulseGradient {
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .btn-outline-primary.rounded-pill {
+        transition: all 0.25s ease;
+    }
+
+    .btn-outline-primary.rounded-pill:hover {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border-color: transparent;
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+    /* Chat bubbles fade + slide in */
+    .chat-messages .d-flex.mb-3 {
+        animation: bubbleIn 0.35s ease both;
+    }
+
+    @keyframes bubbleIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .chat-bubble {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .chat-bubble:hover {
+        transform: translateY(-1px);
+    }
+
+    .chat-bubble-sent {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(99, 102, 241, 0.25);
+    }
+
+    .chat-bubble-received {
+        background: #f1f2f6;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Message input focus glow */
+    #messageInput {
+        transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    #messageInput:focus {
+        border-color: #8b5cf6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+    }
+
+    /* Send button */
+    #chatForm .btn-primary.rounded-circle {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        border: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #chatForm .btn-primary.rounded-circle:hover {
+        transform: scale(1.1) rotate(8deg);
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Empty state icon gentle float */
+    .fa-comments.fa-4x {
+        animation: floatIcon 3s ease-in-out infinite;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes floatIcon {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-8px); }
+    }
+</style>
+
 <div class="container py-4">
     <div class="row g-4">
         <!-- Sidebar Conversation List -->
@@ -125,9 +287,9 @@ require_once __DIR__ . '/includes/navbar.php';
 
                     <!-- Chat Messages Body -->
                     <div class="chat-messages" id="chatMessages">
-                        <?php foreach ($messages as $msg): ?>
+                        <?php foreach ($messages as $i => $msg): ?>
                             <?php $is_me = ($msg['sender_id'] == $user_id); ?>
-                            <div class="d-flex mb-3 <?= $is_me ? 'justify-content-end' : 'justify-content-start' ?>">
+                            <div class="d-flex mb-3 <?= $is_me ? 'justify-content-end' : 'justify-content-start' ?>" style="animation-delay: <?= min($i * 0.03, 0.6) ?>s;">
                                 <div class="chat-bubble <?= $is_me ? 'chat-bubble-sent' : 'chat-bubble-received' ?>">
                                     <div><?= nl2br(e($msg['message'])) ?></div>
                                     <span class="chat-time"><?= format_time($msg['created_at']) ?></span>
@@ -170,6 +332,14 @@ function startInstantCall(requestId) {
     })
     .catch(err => console.error('Start call error:', err));
 }
+
+// Auto-scroll to latest message with a smooth animation on load
+document.addEventListener('DOMContentLoaded', function () {
+    const chatMessages = document.getElementById('chatMessages');
+    if (chatMessages) {
+        chatMessages.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+    }
+});
 </script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
