@@ -128,7 +128,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     <div>
                         <h3 class="fw-bold mb-1"><?= e($mentor['name']) ?></h3>
                         <p class="text-muted small mb-1">
-                            <i class="fas fa-university text-primary me-1"></i> <?= e($mentor['college'] ?? 'College') ?>
+                            <i class="fas fa-university text-dark me-1"></i> <?= e($mentor['college'] ?? 'College') ?>
                             <span class="mx-1">•</span> <?= e($mentor['department'] ?? 'Department') ?>
                         </p>
                         <div class="d-flex align-items-center gap-2">
@@ -243,7 +243,7 @@ require_once __DIR__ . '/includes/navbar.php';
         <!-- Request Form Right Column -->
         <div class="col-lg-5">
             <div class="keh-card p-4 shadow-sm sticky-top" style="top: 90px;">
-                <h4 class="fw-bold mb-3"><i class="fas fa-paper-plane text-primary me-2"></i> Send Learning Request</h4>
+                <h4 class="fw-bold mb-3"><i class="fas fa-paper-plane text-dark me-2"></i> Send Learning Request</h4>
 
                 <?php if ($is_self): ?>
                     <div class="alert alert-info">
