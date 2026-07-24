@@ -210,8 +210,11 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `profile_photo`, `colleg
 (3, 'Krishna Patel', 'krishna@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar2.png', 'College of Engineering & Tech', 'Information Technology', 'Graphic designer with 3 years of freelancing experience. Looking to learn Python for data science.', 'https://github.com/krishnadesign', 'https://linkedin.com/in/krishnapatel', 125, 0, 0),
 (4, 'Aman Verma', 'aman@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar3.png', 'State University of Design', 'Media Arts', 'Video editor and motion graphics creator. Love teaching Premiere Pro and learning Web Development.', 'https://github.com/amanvfx', 'https://linkedin.com/in/amanverma', 100, 0, 0),
 (5, 'Sneha Rao', 'sneha@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'avatar4.png', 'City Arts College', 'Humanities', 'Fluent Spanish speaker and public speaking coach. Eager to pick up C++ algorithms.', 'https://github.com/sneharao', 'https://linkedin.com/in/sneharao', 85, 0, 0),
-(6, 'Krishna Nile', 'krishnanile129@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Full Stack Developer & Peer Tutor.', 'https://github.com', 'https://linkedin.com', 120, 0, 0),
-(7, 'Swarali Pahane', 'pahaneswarali@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Passionate learner & student mentor.', 'https://github.com', 'https://linkedin.com', 100, 0, 0);
+(6, 'Krushnakant Nile', 'krishnanile129@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Full Stack Developer & Peer Tutor.', 'https://github.com/krushnakant', 'https://linkedin.com/in/krushnakant', 120, 0, 0),
+(7, 'Swarali Pahane', 'pahaneswarali@gmail.com', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Passionate learner & student mentor.', 'https://github.com/swarali', 'https://linkedin.com/in/swarali', 100, 0, 0),
+(8, 'Sakul', 'sakul@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'Software developer & technology enthusiast.', 'https://github.com/sakul', 'https://linkedin.com/in/sakul', 110, 0, 0),
+(9, 'Suhani', 'suhani@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Information Technology', 'Creative designer and frontend enthusiast.', 'https://github.com/suhani', 'https://linkedin.com/in/suhani', 105, 0, 0),
+(10, 'Sanskruti', 'sanskruti@student.edu', '$2y$10$wT38Y.HnJ6Z6s/p7d2d0xed9hW24G2hN4q7M2O6gE2v1x.O4G2V7G', 'default_avatar.png', 'Zeal College of Engineering', 'Computer Science', 'AI & Machine Learning enthusiast.', 'https://github.com/sanskruti', 'https://linkedin.com/in/sanskruti', 95, 0, 0);
 
 -- Seed User Skills
 -- Rahul teaches Java (Expert), wants to learn Figma (Beginner)
@@ -230,7 +233,27 @@ INSERT INTO `user_skills` (`user_id`, `skill_id`, `skill_type`, `proficiency_lev
 -- Sneha teaches Spanish (Expert) & Public Speaking (Advanced), wants to learn Java (Beginner)
 (5, 11, 'teach', 'Expert'),
 (5, 10, 'teach', 'Advanced'),
-(5, 1, 'learn', 'Beginner');
+(5, 1, 'learn', 'Beginner'),
+-- Krushnakant teaches PHP & MySQL (Expert), Java (Advanced)
+(6, 5, 'teach', 'Expert'),
+(6, 1, 'teach', 'Advanced'),
+(6, 8, 'learn', 'Intermediate'),
+-- Swarali teaches Python (Advanced), Figma (Intermediate)
+(7, 2, 'teach', 'Advanced'),
+(7, 8, 'teach', 'Intermediate'),
+(7, 5, 'learn', 'Beginner'),
+-- Sakul teaches C++ (Advanced), Web Development (Intermediate)
+(8, 3, 'teach', 'Advanced'),
+(8, 4, 'teach', 'Intermediate'),
+(8, 2, 'learn', 'Beginner'),
+-- Suhani teaches Graphic Design (Advanced), UI/UX (Intermediate)
+(9, 6, 'teach', 'Advanced'),
+(9, 8, 'teach', 'Intermediate'),
+(9, 1, 'learn', 'Beginner'),
+-- Sanskruti teaches Data Science (Advanced), Python (Intermediate)
+(10, 2, 'teach', 'Advanced'),
+(10, 10, 'teach', 'Intermediate'),
+(10, 6, 'learn', 'Beginner');
 
 -- Seed Learning Requests
 INSERT INTO `learning_requests` (`id`, `learner_id`, `mentor_id`, `skill_id`, `message`, `status`) VALUES
