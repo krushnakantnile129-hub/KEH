@@ -3,7 +3,7 @@ $page_title = "Skill Chat";
 require_once __DIR__ . '/includes/auth-check.php';
 require_once __DIR__ . '/includes/functions.php';
 
-$user_id = $current_user['id'];
+$user_id =  $current_user['id'];
 
 // Fetch all accepted requests for conversation list
 $stmt = $pdo->prepare("
@@ -58,7 +58,7 @@ require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <style>
-    /* ===== Skill Chat — gradient theme & animations ===== */
+    
 
     .keh-card {
         transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -110,6 +110,8 @@ require_once __DIR__ . '/includes/navbar.php';
         background: linear-gradient(120deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08));
         padding: 1rem 1.25rem;
         border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+        
+  
     }
 
     .keh-card-header img {
@@ -149,6 +151,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
     /* Chat bubbles fade + slide in */
     .chat-messages .d-flex.mb-3 {
+          scrollbar-width: none;
         animation: bubbleIn 0.35s ease both;
     }
 

@@ -7,12 +7,10 @@ $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name         = sanitize($_POST['name'] ?? '');
-    $bio          = sanitize($_POST['bio'] ?? '');
-    $college      = sanitize($_POST['college'] ?? '');
-    $department   = sanitize($_POST['department'] ?? '');
-    $github_url   = sanitize($_POST['github_url'] ?? '');
-    $linkedin_url = sanitize($_POST['linkedin_url'] ?? '');
+    $name       = sanitize($_POST['name'] ?? '');
+    $bio        = sanitize($_POST['bio'] ?? '');
+    $college    = sanitize($_POST['college'] ?? '');
+    $department = sanitize($_POST['department'] ?? '');
 
     if (empty($name) || empty($college) || empty($department)) {
         $error = "Name, College, and Department cannot be empty.";
@@ -50,10 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt = $pdo->prepare("
                     UPDATE users 
-                    SET name = ?, bio = ?, college = ?, department = ?, github_url = ?, linkedin_url = ?, profile_photo = ?
+                    SET name = ?, bio = ?, college = ?, department = ?, profile_photo = ?
                     WHERE id = ?
                 ");
-                $stmt->execute([$name, $bio, $college, $department, $github_url, $linkedin_url, $photo_filename, $current_user['id']]);
+                $stmt->execute([$name, $bio, $college, $department, $photo_filename, $current_user['id']]);
                 
                 $success = "Profile updated successfully!";
                 
@@ -139,15 +137,6 @@ require_once __DIR__ . '/includes/navbar.php';
                         <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="Describe your background, what you enjoy teaching, and what skills you want to pick up..."><?= e($current_user['bio']) ?></textarea>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="github_url" class="form-label fw-semibold small"><i class="fab fa-github me-1"></i> GitHub URL</label>
-                            <input type="url" class="form-control" id="github_url" name="github_url" placeholder="https://github.com/username" value="<?= e($current_user['github_url']) ?>">
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <label for="linkedin_url" class="form-label fw-semibold small"><i class="fab fa-linkedin me-1 text-primary"></i> LinkedIn URL</label>
-                            <input type="url" class="form-control" id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/in/username" value="<?= e($current_user['linkedin_url']) ?>">
-                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end gap-2 border-top pt-3">

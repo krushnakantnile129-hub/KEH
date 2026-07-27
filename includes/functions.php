@@ -107,17 +107,16 @@ function get_profile_completion_percentage($pdo, $user) {
     $score = 0;
 
     if (!empty($user['name'])) $score += 20;
-    if (!empty($user['college']) && strtolower($user['college']) !== 'student') $score += 10;
-    if (!empty($user['department']) && strtolower($user['department']) !== 'general') $score += 10;
-    if (!empty($user['profile_photo']) && $user['profile_photo'] !== 'default_avatar.png') $score += 15;
-    if (!empty($user['bio']) && strlen(trim($user['bio'])) > 5) $score += 15;
-    if (!empty($user['github_url']) || !empty($user['linkedin_url'])) $score += 15;
+    if (!empty($user['college']) && strtolower($user['college']) !== 'student') $score += 20;
+    if (!empty($user['department']) && strtolower($user['department']) !== 'general') $score += 20;
+    if (!empty($user['profile_photo']) && $user['profile_photo'] !== 'default_avatar.png') $score += 20;
+    if (!empty($user['bio']) && strlen(trim($user['bio'])) > 5) $score += 10;
 
     if (isset($user['id']) && $pdo) {
         try {
             $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_skills WHERE user_id = ?");
             $stmt->execute([$user['id']]);
-            if ($stmt->fetchColumn() > 0) $score += 15;
+            if ($stmt->fetchColumn() > 0) $score += 10;
         } catch (Exception $e) {
             // Ignore exception
         }

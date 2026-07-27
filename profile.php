@@ -115,18 +115,6 @@ require_once __DIR__ . '/includes/navbar.php';
                     <span class="fw-bold ms-1"><?= $rating_info['avg'] > 0 ? $rating_info['avg'] . '/5' : 'New Mentor' ?></span>
                     <span class="text-muted small">(<?= $rating_info['count'] ?> reviews)</span>
                 </div>
-                <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
-                    <?php if (!empty($profile_user['github_url'])): ?>
-                        <a href="<?= e($profile_user['github_url']) ?>" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill">
-                            <i class="fab fa-github me-1"></i> GitHub
-                        </a>
-                    <?php endif; ?>
-                    <?php if (!empty($profile_user['linkedin_url'])): ?>
-                        <a href="<?= e($profile_user['linkedin_url']) ?>" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill">
-                            <i class="fab fa-linkedin me-1"></i> LinkedIn
-                        </a>
-                    <?php endif; ?>
-                </div>
             </div>
             <div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
                 <div class="points-pill bg-warning-subtle text-warning-emphasis fw-bold px-3 py-2 rounded-pill d-inline-block mb-3">

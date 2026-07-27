@@ -28,8 +28,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `college` VARCHAR(150) DEFAULT NULL,
   `department` VARCHAR(100) DEFAULT NULL,
   `bio` TEXT DEFAULT NULL,
-  `github_url` VARCHAR(255) DEFAULT NULL,
-  `linkedin_url` VARCHAR(255) DEFAULT NULL,
   `points` INT DEFAULT 0,
   `is_admin` TINYINT(1) DEFAULT 0,
   `is_blocked` TINYINT(1) DEFAULT 0,
