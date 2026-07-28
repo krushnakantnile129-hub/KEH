@@ -72,6 +72,9 @@ $stmt = $pdo->prepare("
 $stmt->execute([$user_id]);
 $current_skills = $stmt->fetchAll();
 
+$teach_skills = array_filter($current_skills, fn($s) => $s['skill_type'] === 'teach');
+$learn_skills = array_filter($current_skills, fn($s) => $s['skill_type'] === 'learn');
+
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
 ?>
@@ -99,23 +102,30 @@ require_once __DIR__ . '/includes/navbar.php';
 
                 <form action="add-skills.php" method="POST">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">I want to:</label>
+                        <label class="form-label fw-semibold small">Skill Type (Select Purpose):</label>
                         <div class="btn-group w-100" role="group">
                             <input type="radio" class="btn-check" name="skill_type" id="type_teach" value="teach" checked>
-                            <label class="btn btn-outline-success py-2" for="type_teach"><i class="fas fa-chalkboard-teacher me-1"></i> Teach This Skill</label>
+                            <label class="btn btn-outline-success py-2 fw-semibold" for="type_teach">
+                                <i class="fas fa-chalkboard-teacher me-1"></i> Skill I Can Teach
+                            </label>
 
                             <input type="radio" class="btn-check" name="skill_type" id="type_learn" value="learn">
-                            <label class="btn btn-outline-info py-2" for="type_learn"><i class="fas fa-graduation-cap me-1"></i> Learn This Skill</label>
+                            <label class="btn btn-outline-info py-2 fw-semibold" for="type_learn">
+                                <i class="fas fa-graduation-cap me-1"></i> Skill I Want to Learn
+                            </label>
+                        </div>
+                        <div class="form-text text-xs text-muted mt-1">
+                            Choose <strong>Teach</strong> if you want to mentor others in this skill, or <strong>Learn</strong> if you want to acquire this skill.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="skill_name" class="form-label fw-semibold small">Skill Name (Type Manually)</label>
-                        <input type="text" class="form-control form-control-lg fs-6" id="skill_name" name="skill_name" required placeholder="Write skill (e.g. Java, Python, Graphic Design, Guitar...)" value="<?= e($_POST['skill_name'] ?? '') ?>">
+                        <label for="skill_name" class="form-label fw-semibold small">Skill Name</label>
+                        <input type="text" class="form-control form-control-lg fs-6" id="skill_name" name="skill_name" required placeholder="e.g. Java, Python, Graphic Design, Web Development..." value="<?= e($_POST['skill_name'] ?? '') ?>">
                     </div>
 
                     <div class="mb-3">
-                        <label for="category_id" class="form-label fw-semibold small">Skill Category</label>
+                        <label for="category_id" class="form-label fw-semibold small">Category</label>
                         <select class="form-select" id="category_id" name="category_id">
                             <option value="">-- Select Category --</option>
                             <?php foreach ($categories as $cat): ?>
@@ -143,42 +153,85 @@ require_once __DIR__ . '/includes/navbar.php';
 
         <!-- Current Skills List Right -->
         <div class="col-lg-7">
-            <div class="keh-card p-4 shadow-sm">
-                <h4 class="fw-bold mb-3"><i class="fas fa-list text-warning me-2"></i> Your Current Profile Skills</h4>
+            <!-- 1. Skills I Can Teach Card -->
+            <div class="keh-card p-4 shadow-sm mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold mb-0 text-success">
+                        <i class="fas fa-chalkboard-teacher me-2"></i> Skills I Can Teach <span class="badge bg-success-subtle text-success ms-1"><?= count($teach_skills) ?></span>
+                    </h5>
+                    <span class="text-muted text-xs">Visible to students seeking mentors</span>
+                </div>
 
-                <?php if (empty($current_skills)): ?>
-                    <div class="text-center py-4 bg-light rounded-3">
-                        <p class="text-muted small mb-0">You haven't added any skills yet. Add your first skill using the form!</p>
+                <?php if (empty($teach_skills)): ?>
+                    <div class="text-center py-3 bg-light rounded-3">
+                        <p class="text-muted small mb-0">No teaching skills added yet. Use the form on the left to add skills you can teach!</p>
                     </div>
                 <?php else: ?>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle">
+                        <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
                                     <th>Skill</th>
                                     <th>Category</th>
-                                    <th>Type</th>
                                     <th>Level</th>
                                     <th class="text-end">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($current_skills as $cs): ?>
+                                <?php foreach ($teach_skills as $ts): ?>
                                     <tr>
-                                        <td class="fw-bold"><?= e($cs['skill_name']) ?></td>
-                                        <td class="small text-muted"><?= e($cs['category_name']) ?></td>
+                                        <td class="fw-bold text-dark"><?= e($ts['skill_name']) ?></td>
+                                        <td class="small text-muted"><?= e($ts['category_name']) ?></td>
                                         <td>
-                                            <?php if ($cs['skill_type'] === 'teach'): ?>
-                                                <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-2 py-1"><i class="fas fa-chalkboard me-1"></i> Teach</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-info-subtle text-info-emphasis rounded-pill px-2 py-1"><i class="fas fa-book me-1"></i> Learn</span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-light text-dark border"><?= e($cs['proficiency_level']) ?></span>
+                                            <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-2.5 py-1"><?= e($ts['proficiency_level']) ?></span>
                                         </td>
                                         <td class="text-end">
-                                            <a href="add-skills.php?action=delete&id=<?= $cs['id'] ?>" class="btn btn-sm btn-outline-danger rounded-circle" onclick="return confirm('Are you sure you want to remove this skill?');" title="Remove">
+                                            <a href="add-skills.php?action=delete&id=<?= $ts['id'] ?>" class="btn btn-sm btn-outline-danger rounded-circle" onclick="return confirm('Are you sure you want to remove this teaching skill?');" title="Remove">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- 2. Skills I Want to Learn Card -->
+            <div class="keh-card p-4 shadow-sm">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="fw-bold mb-0 text-info">
+                        <i class="fas fa-graduation-cap me-2"></i> Skills I Want to Learn <span class="badge bg-info-subtle text-info ms-1"><?= count($learn_skills) ?></span>
+                    </h5>
+                    <span class="text-muted text-xs">Your learning goals</span>
+                </div>
+
+                <?php if (empty($learn_skills)): ?>
+                    <div class="text-center py-3 bg-light rounded-3">
+                        <p class="text-muted small mb-0">No learning goals added yet. Select 'Skill I Want to Learn' in the form to add one!</p>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Skill</th>
+                                    <th>Category</th>
+                                    <th>Target Level</th>
+                                    <th class="text-end">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($learn_skills as $ls): ?>
+                                    <tr>
+                                        <td class="fw-bold text-dark"><?= e($ls['skill_name']) ?></td>
+                                        <td class="small text-muted"><?= e($ls['category_name']) ?></td>
+                                        <td>
+                                            <span class="badge bg-info-subtle text-info-emphasis rounded-pill px-2.5 py-1"><?= e($ls['proficiency_level']) ?></span>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="add-skills.php?action=delete&id=<?= $ls['id'] ?>" class="btn btn-sm btn-outline-danger rounded-circle" onclick="return confirm('Are you sure you want to remove this learning goal?');" title="Remove">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
