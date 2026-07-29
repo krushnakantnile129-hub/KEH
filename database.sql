@@ -1,5 +1,7 @@
--- Knowledge Exchange Hub Database Schema
--- Note: Database selection is handled by phpMyAdmin / host panel
+-- Knowledge Exchange Hub Database Schema (XAMPP MySQL)
+CREATE DATABASE IF NOT EXISTS `keh_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `keh_db`;
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `webrtc_signals`;
